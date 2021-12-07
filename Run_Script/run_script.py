@@ -90,10 +90,10 @@ n_hid = 8  # Number of hidden Neurons
 power_array = np.array([2 ** (n_vis + n_hid - 1 - i) for i in range(n_vis + n_hid)], dtype = float) # array enumerates states
 
 noise_type = "On-chip" # Noise type: On-chip or Poisson
-divider = np.load('plots/activations/divider.txt') # divider from chip calibration measurement
+divider = np.load('calibration/divider.txt') # divider from chip calibration measurement
 
 taurefs = np.zeros(n_vis + n_hid)  # Refractory times for the neurons
-taurefs_read = np.load('plots/activations/taurefs.txt')  # from chip calibration measurement
+taurefs_read = np.load('calibration/taurefs.txt')  # from chip calibration measurement
 taurefs[:] = taurefs_read[:n_vis+n_hid] / divider
 
 duration = 1.0e-2  # Duration of measurement
@@ -103,8 +103,8 @@ epochs = 2000 # Epochs of training
 
 p_target = np.load('../Targetstates/targetstates_Bell.txt') # Load target distribution - This is a fixed distribution, no samples!
 
-alpha_w = np.load('plots/activations/alpha_w.txt') / divider # Width of weight activation function from chip calibration measurement
-alpha_b = np.load('plots/activations/alpha_b.txt') / divider # Width of bias activation function from chip calibration measurement
+alpha_w = np.load('calibration/alpha_w.txt') / divider # Width of weight activation function from chip calibration measurement
+alpha_b = np.load('calibration/alpha_b.txt') / divider # Width of bias activation function from chip calibration measurement
 eta = 1.  # RBM learning rate
 
 
@@ -120,7 +120,7 @@ np.fill_diagonal(w, 0.)
 
 # Initialize biases
 b = np.full(n, -50.) + np.random.randint(100, size=n)
-b_read = np.load('plots/activations/biases.txt')
+b_read = np.load('calibration/biases.txt')
 b[:n] += b_read[:n] / divider + 50.
 b[:2] -= 20.
 b[2:4] += 20.
@@ -247,11 +247,11 @@ for e in range(epochs):
 
     ######### Output state distributions, weights, biases, and DKL ########
     
-    with open('plots/Bell_States_New/learning_nvis{}_nhid{}_{}reps_p.txt'.format(n_vis, n_hid, repetitions), 'wb') as f:
+    with open('learning_nvis{}_nhid{}_{}reps_p.txt'.format(n_vis, n_hid, repetitions), 'wb') as f:
         np.save(f, p_train)
-    with open('plots/Bell_States_New/learning_nvis{}_nhid{}_{}reps_b.txt'.format(n_vis, n_hid, repetitions), 'wb') as f:
+    with open('learning_nvis{}_nhid{}_{}reps_b.txt'.format(n_vis, n_hid, repetitions), 'wb') as f:
         np.save(f, b_train)
-    with open('plots/Bell_States_New/learning_nvis{}_nhid{}_{}reps_w.txt'.format(n_vis, n_hid, repetitions), 'wb') as f:
+    with open('learning_nvis{}_nhid{}_{}reps_w.txt'.format(n_vis, n_hid, repetitions), 'wb') as f:
         np.save(f, w_train)
-    with open('plots/Bell_States_New/learning_nvis{}_nhid{}_{}reps_dkl.txt'.format(n_vis, n_hid, repetitions), 'wb') as f:
+    with open('learning_nvis{}_nhid{}_{}reps_dkl.txt'.format(n_vis, n_hid, repetitions), 'wb') as f:
         np.save(f, dkl_train)
