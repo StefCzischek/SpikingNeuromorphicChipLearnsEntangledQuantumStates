@@ -101,7 +101,7 @@ repetitions = 25   # Measurement repetitions
 dt = 2e-6  # Time step in which states are read when sampling
 epochs = 2000 # Epochs of training
 
-p_target = np.load('../Targetstates/targetstates_Bell.txt') # Load target distribution - This is a fixed distribution, no samples!
+p_target = np.load('../Data/Targetstates/targetstates_Bell.txt') # Load target distribution - This is a fixed distribution, no samples!
 
 alpha_w = np.load('calibration/alpha_w.txt') / divider # Width of weight activation function from chip calibration measurement
 alpha_b = np.load('calibration/alpha_b.txt') / divider # Width of bias activation function from chip calibration measurement
