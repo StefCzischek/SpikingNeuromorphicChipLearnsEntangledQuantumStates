@@ -7,11 +7,21 @@ The code is used to train the BrainScaleS-2 spiking neuromorphic chip to represe
 This repository contains an example script to train the neuromorphic chip to represent a given target state based on samples drawn from the hardware (```Run_Script```). It further contains the measured data and the scripts to create the plots used in the paper figures (```Data```).
 
 ## Run Script
+
+The two scripts ```bell_state.py``` and ```ghz_state.py``` implement the training of a spiking neural network with an RBM-like structure to represent Bell and GHZ states.
+% maybe add more description? I.e. what's the training method, how many iterations, etc.
+
+If you want to execute it, you either need access to the BrainScaleS-2 hardware and the ```hxsampler``` module or replace ```hxsampler.HXSampler``` by another implementation of a sampler. The ```HXSampler.get_samples``` method generates a number of samples for a given hardware configuration and the member arrays ```HXSampler.logical_bias``` and ```HXSampler.logical_weight``` hold the current network configuration (bias vector and weight matrix). Since the set hardware parameters correspond to physical circuits their meaning in terms of the activity changes can be measured using the methods ```HXSampler.measure_activation_functions``` and ```HXSampler.measure_weight_activation```. In case of a direct RBM implementation these can be omitted. The ```hxsampler``` module is currently not publicly available.
+
+The parameters of the observed activation functions for all neurons of the neuromorphic chip can be found in ```calibration```.
+% explain the meaning of the different files and the layout of the data %
+
+
+<!-- The used parameters for the neuromorphic hardware setup are extracted from calibration measurements and provided in the folder ```calibration```.
+
 The Python script ```run_script.py``` can be executed to train a neural network with RBM structure to represent a Bell state of two qubits. The module ```hxsampler``` provides a connection to the BrainScaleS-2 spiking neuromorphic hardware. Via this module the connecting weights and biases of the spiking hardware neurons can be adapted during the training process. Furthermore, neuron states and spike times can be read out, which is interpreted as sampling neuron configurations when representing quantum states. This module is not yet publicly available and should be replaced with a desired neuron sampler to run the script.
 
-The used parameters for the neuromorphic hardware setup are extracted from calibration measurements and provided in the folder ```calibration```.
-
-This script can further be modified to represent GHZ states on larger qubit systems (see Fig. 3 in the manuscript) and implement different network architectures, such as deep and fully connected networks, as they are used in Fig. 4 in the manuscript.
+This script can further be modified to represent GHZ states on larger qubit systems (see Fig. 3 in the manuscript) and implement different network architectures, such as deep and fully connected networks, as they are used in Fig. 4 in the manuscript. -->
 
 ## Data
 This folder contains all data that is used to create the plots in the paper figures. 
