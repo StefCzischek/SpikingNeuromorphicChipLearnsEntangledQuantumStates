@@ -84,16 +84,16 @@ def bin_to_dec(x, n):
 ################# Main function ##################
 
 ######### Set Network and Hardware Parameters ##########
-n_vis = 4  # Number of visible Neurons
+n_vis = 6  # Number of visible Neurons
 n_hid = 8  # Number of hidden Neurons
 
 power_array = np.array([2 ** (n_vis + n_hid - 1 - i) for i in range(n_vis + n_hid)], dtype = float) # array enumerates states
 
 noise_type = "On-chip" # Noise type: On-chip or Poisson
-divider = np.load('calibration/divider.txt') # divider from chip calibration measurement
+divider = np.load('hardware_characteristics/divider.txt') # divider from chip calibration measurement
 
 taurefs = np.zeros(n_vis + n_hid)  # Refractory times for the neurons
-taurefs_read = np.load('calibration/taurefs.txt')  # from chip calibration measurement
+taurefs_read = np.load('hardware_characteristics/taurefs.txt')  # from chip calibration measurement
 taurefs[:] = taurefs_read[:n_vis+n_hid] / divider
 
 duration = 1.0e-2  # Duration of measurement
@@ -101,10 +101,10 @@ repetitions = 25   # Measurement repetitions
 dt = 2e-6  # Time step in which states are read when sampling
 epochs = 2000 # Epochs of training
 
-p_target = np.load('../Data/Targetstates/targetstates_Bell.txt') # Load target distribution - This is a fixed distribution, no samples!
+p_target = np.load('../Data/Targetstates/targetstates_GHZ3.txt') # Load target distribution - This is a fixed distribution, no samples!
 
-alpha_w = np.load('calibration/alpha_w.txt') / divider # Width of weight activation function from chip calibration measurement
-alpha_b = np.load('calibration/alpha_b.txt') / divider # Width of bias activation function from chip calibration measurement
+alpha_w = np.load('hardware_characteristics/alpha_w.txt') / divider # Width of weight activation function from chip calibration measurement
+alpha_b = np.load('hardware_characteristics/alpha_b.txt') / divider # Width of bias activation function from chip calibration measurement
 eta = 1.  # RBM learning rate
 
 
@@ -120,7 +120,7 @@ np.fill_diagonal(w, 0.)
 
 # Initialize biases
 b = np.full(n, -50.) + np.random.randint(100, size=n)
-b_read = np.load('calibration/biases.txt')
+b_read = np.load('hardware_characteristics/biases.txt')
 b[:n] += b_read[:n] / divider + 50.
 b[:2] -= 20.
 b[2:4] += 20.

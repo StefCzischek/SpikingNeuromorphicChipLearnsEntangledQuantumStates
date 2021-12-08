@@ -31,9 +31,9 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid.inset_locator import (inset_axes, InsetPosition, mark_inset)
 
 # define arrays of numbers of hidden neurons, they differ for 2/3/4 qubits
-hiddens_2 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 58]
-hiddens_3 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 56]
-hiddens_4 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+hiddens_2 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+hiddens_3 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 58]
+hiddens_4 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 56]
 reps = 25
 
 # evaluate the quantum fidelity
@@ -154,25 +154,24 @@ for i, h_2 in enumerate(hiddens_2):
     (fid_2_save, fid_3_save, fid_4_save) = q_fidelity(h_2, h_3, h_4, reps)
 
     # append mean and standard deviations of outcomes
-    fid_2 = np.append(fid_2, np.mean(fid_2_save))
-    fid_2_std = np.append(fid_2_std, np.std(fid_2_save))
-    fid_3 = np.append(fid_3, np.mean(fid_3_save))
-    fid_3_std = np.append(fid_3_std, np.std(fid_3_save))
-    fid_4 = np.append(fid_4, np.mean(fid_4_save))
-    fid_4_std = np.append(fid_4_std, np.std(fid_4_save))
-
+    fid_2 = np.append(fid_2, np.mean(np.real(fid_2_save)))
+    fid_2_std = np.append(fid_2_std, np.std(np.real(fid_2_save)))
+    fid_3 = np.append(fid_3, np.mean(np.real(fid_3_save)))
+    fid_3_std = np.append(fid_3_std, np.std(np.real(fid_3_save)))
+    fid_4 = np.append(fid_4, np.mean(np.real(fid_4_save)))
+    fid_4_std = np.append(fid_4_std, np.std(np.real(fid_4_save)))
 
 ########## Set up figure ############
 
 ax1.hlines(y=1./np.sqrt(2.), xmin=5, xmax=60, color='gray', linestyle='--', linewidth=0.7)
 
 ax1.errorbar(hiddens_2, fid_2, yerr=fid_2_std, linestyle='None', marker='o', markerfacecolor='none', markeredgecolor='C0', markersize=2., linewidth=0.7, markeredgewidth=0.5, color='C0')
-ax1.plot(hiddens, fid_2, 'o', markerfacecolor='C0', markeredgecolor='none', markersize=2., linewidth=0.3, alpha=0.5)
+ax1.plot(hiddens_2, fid_2, 'o', markerfacecolor='C0', markeredgecolor='none', markersize=2., linewidth=0.3, alpha=0.5)
 
-ax1.errorbar(hiddens_3, fid_3, yerr=fid4_std, linestyle='None', marker='d', markerfacecolor='none', markeredgecolor='C1', markersize=2., linewidth=0.7, markeredgewidth=0.5, color='C1')
+ax1.errorbar(hiddens_3, fid_3, yerr=fid_3_std, linestyle='None', marker='d', markerfacecolor='none', markeredgecolor='C1', markersize=2., linewidth=0.7, markeredgewidth=0.5, color='C1')
 ax1.plot(hiddens_3, fid_3, 'd', markerfacecolor='C1', markeredgecolor='none', markersize=2., linewidth=0.3, alpha=0.5)
 
-ax1.errorbar(hiddens_4, fid_4, yerr=fid4_std, linestyle='None', marker='H', markerfacecolor='none', markeredgecolor='C2', markersize=2., linewidth=0.7, markeredgewidth=0.5, color='C2')
+ax1.errorbar(hiddens_4, fid_4, yerr=fid_4_std, linestyle='None', marker='H', markerfacecolor='none', markeredgecolor='C2', markersize=2., linewidth=0.7, markeredgewidth=0.5, color='C2')
 ax1.plot(hiddens_4, fid_4, 'H', markerfacecolor='C2', markeredgecolor='none', markersize=2., linewidth=0.3, alpha=0.5)
 
 ax1.set_xlabel(r'$\#$ Hidden Neurons $M$', labelpad=0.7)
