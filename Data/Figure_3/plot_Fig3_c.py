@@ -180,4 +180,4 @@ ax1.set_ylabel('Fidelity', labelpad=0.7)
 ax1.tick_params(axis="x", direction="in", length=1.5, width=0.3, labelsize=5, pad=1.)
 ax1.tick_params(axis="y", direction="in", length=1.5, width=0.3, labelsize=5, pad=1.)
 
-plt.savefig('Fid_large_new.pdf', bbox_inches='tight')
+plt.savefig('Fig3_c.pdf', bbox_inches='tight')
